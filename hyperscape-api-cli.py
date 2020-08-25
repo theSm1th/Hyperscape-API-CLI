@@ -2,9 +2,9 @@ import urllib.request
 import json
 import os
 
-platformCheck = False # For the while statement, if True, the platform variable has been set
-platform = "" # The platform that the user chose
-platformID = 0 # The number the user typed that corresponds to the platform in the variable platform
+platformCheck = False  # For the while statement, if True, the platform variable has been set
+platform = ""  # The platform that the user chose
+platformID = 0  # The number the user typed that corresponds to the platform in the variable platform
 
 # Set a user-agent to access the API, gives a HTTP error 403 (Forbidden) if you don't
 UAheader = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0"}
@@ -31,7 +31,7 @@ while platformCheck == 0:
 
 # Contact the API with our gathered input, note that the API must be contacted twice, as the username
 # (when sent to the API) gives the Ubisoft account UUID, which can then be sent back to the API to retrieve statistics
-url = "https://hypers.apitab.com/search/{}/{}"
+url = "https://hypers.apitab.com/search/{}/{}?u=1598372116"
 request = urllib.request.Request(url.format(platform, user), data=None, headers=UAheader)
 
 # Parse the retrieved JSON (has Ubisoft UUID) from the API into a Python Dictionary
@@ -51,7 +51,7 @@ request = urllib.request.Request(uidURL.format(uid), data=None, headers=UAheader
 with urllib.request.urlopen(request) as openURL:
     fullData = json.loads(openURL.read())
 try:
-    # Prints a few retrieved player statistics
+    # Prints a few retrieved player statistics. Messy, but it works.
     print("Victories : " + str(fullData["data"]["stats"]["wins"]) +
           "\nCrown Victories : " + str(fullData["data"]["stats"]["crown_wins"]) +
           "\nOverall Damage : " + str(fullData["data"]["stats"]["damage"]) +
